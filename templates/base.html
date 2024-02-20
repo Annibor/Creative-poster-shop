@@ -46,6 +46,20 @@
               <div class="logo navbar-brand me-2">
                   <h1>Creative Store</h1>
               </div>
+              <div>
+                <form method="get" action="">
+                  <div>
+                    <input type="text" name="q" placeholder="Search">
+                    <div>
+                      <button class="btn" type="submit">
+                        <span>
+                          <i class="fas fa-search"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
               <button
                   class="navbar-toggler"
                   type="button"
@@ -53,6 +67,42 @@
                   aria-label="toggle navigation">
                   <i class="fa-light fa-bars"></i>
               </button>
+              <div>
+                <ul>
+                  <li>
+                    <a href="#" data-toggle="dropdown">
+                      <div class="text-center">
+                        <p>My Profile</p>
+                      </div>
+                    </a>
+                    <div class="dropdown">
+                      {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                          <a href="" class="dropdown-item">Product Management</a>
+                        {% endif %}
+                        <a href="" class="dropdown-item">Logout</a>
+                      {% else %}
+                        <a href="{% url 'account_signup' %}">Sign up</a>
+                        <a href="{% url 'account_login' %}">Login</a>
+                      {% endif %}
+                    </div>
+                  </li>
+                  <li>
+                    <a href="">
+                      <div class="text-center">
+                        <div> <i class="fas fa-shopping-bag"></i> </div>
+                        <p>
+                          {% if grand_total %}
+                            €{{ grand_total|floatformat:2 }}
+                          {% else %}
+                            €0.00
+                          {% endif %}
+                        </p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <!-- COLLAPSIBLE NAV-->
               <div class="collapse navbar-collapse">
                   <!--HERE WILL BE LI UL-->
@@ -60,7 +110,7 @@
               <div class="d-flex align-items-center">
                   <ul class="navbar-nav align-items-center mx-auto">
                       <li class="nav-item">
-                          <a class="nav-link" href="#">Home</a>
+                          <a class="nav-link" href="{% url 'home' %}">Home</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" href="#">About</a>
